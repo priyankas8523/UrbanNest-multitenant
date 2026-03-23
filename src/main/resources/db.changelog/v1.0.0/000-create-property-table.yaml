@@ -1,0 +1,69 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1-create-property-table
+      author: your-name
+      context: default,dev,prod
+      comment: |
+        Create PROPERTY table to store property details.
+      changes:
+        - createTable:
+            tableName: PROPERTY
+            columns:
+              - column:
+                  name: ID
+                  type: NUMBER(10,0)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: UUID
+                  type: VARCHAR2(36)
+                  constraints:
+                    nullable: true
+
+              - column:
+                  name: PROPERTY_NAME
+                  type: VARCHAR2(100)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: ADDR1
+                  type: VARCHAR2(100)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: ADDR2
+                  type: VARCHAR2(100)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: CITY
+                  type: VARCHAR2(100)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: STATE
+                  type: VARCHAR2(50)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: POSTAL_CODE
+                  type: VARCHAR2(10)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: STATUS
+                  type: VARCHAR2(20)
+                  constraints:
+                    nullable: true
+
+      rollback:
+        - dropTable:
+            tableName: PROPERTY
