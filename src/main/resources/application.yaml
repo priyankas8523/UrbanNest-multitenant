@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5434/property_db
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://localhost:5434/urbannest_db?currentSchema=public&options=-c%20TimeZone=Asia/Kolkata
+    username: urbannest
+    password: urbannest
     driver-class-name: org.postgresql.Driver
 
 
