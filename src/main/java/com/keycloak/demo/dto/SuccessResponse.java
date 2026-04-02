@@ -11,6 +11,7 @@ import java.time.Instant;
 @AllArgsConstructor
 public class SuccessResponse {
     private int status;
+    private ResponseCode code;
     private String message;
     private String path;
 
