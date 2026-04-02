@@ -19,7 +19,7 @@ public class PropertyServiceImpl implements PropertyService, UrbarNestService {
     private final PropertyRepository propertyRepository;
 
     @Override
-    public void createProperty(Property property) {
+    public void createProperty(Property property) throws UrbanNestException {
         PropertyEntity propertyEntity = mapDtoToEntity(property);
         propertyEntity.setUuid(property.getUuid());
         propertyEntity.setName(property.getName());
@@ -27,14 +27,14 @@ public class PropertyServiceImpl implements PropertyService, UrbarNestService {
     }
 
     @Override
-    public void updateProperty(Property property) {
+    public void updateProperty(Property property) throws UrbanNestException {
         PropertyEntity propertyEntity = mapDtoToEntity(property);
         propertyEntity.setUuid(property.getUuid());
         propertyEntity.setName(property.getName());
         propertyRepository.save(propertyEntity);    }
 
     @Override
-    public ResponseEntity<Page<Property>> getAllProperties(int page, int pageSize, String search) {
+    public ResponseEntity<Page<Property>> getAllProperties(int page, int pageSize, String search) throws UrbanNestException {
         return null;
     }
 
@@ -44,7 +44,7 @@ public class PropertyServiceImpl implements PropertyService, UrbarNestService {
     }
 
     @Override
-    public ResponseEntity<Property> getPropertyById(UUID propertyId) {
+    public ResponseEntity<Property> getPropertyById(UUID propertyId) throws UrbanNestException {
         return data(mapEntityToDto(findPropertyById(propertyId)));
     }
 
