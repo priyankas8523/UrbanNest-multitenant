@@ -1,0 +1,17 @@
+# ==============================================================================
+# MASTER CHANGELOG - Public schema (cross-tenant data)
+# ==============================================================================
+# Runs AUTOMATICALLY on app startup via Spring Boot's Liquibase auto-configuration.
+# Target: "public" PostgreSQL schema.
+# Contains: tenants table, subscription_plans table.
+#
+# HOW TO ADD NEW MIGRATIONS:
+#   1. Create a new file in changesets/ (e.g., 002-add-billing-table.yaml)
+#   2. Add an include entry below
+#   3. NEVER edit existing changeset files (Liquibase checksums will break)
+# ==============================================================================
+
+databaseChangeLog:
+  - include:
+      file: changesets/001-create-master-schema.yaml
+      relativeToChangelogFile: true

@@ -1,0 +1,333 @@
+# ==============================================================================
+# 001: Create tenant-scoped tables
+# ==============================================================================
+# Creates all tables that exist inside each tenant's isolated schema.
+# Every new tenant gets an identical copy of these tables.
+# ==============================================================================
+
+databaseChangeLog:
+
+  # ---------- COMPANY USERS TABLE ----------
+  # Employees of the company who access the Company Portal.
+  # keycloak_id links to the Keycloak identity (JWT "sub" claim).
+  - changeSet:
+      id: 001-01-create-company-users
+      author: multitenant
+      changes:
+        - createTable:
+            tableName: company_users
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: keycloak_id
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: email
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: first_name
+                  type: varchar(100)
+              - column:
+                  name: last_name
+                  type: varchar(100)
+              - column:
+                  name: phone
+                  type: varchar(20)
+              - column:
+                  name: is_active
+                  type: boolean
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: NOW()
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  defaultValueComputed: NOW()
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_by
+                  type: varchar(255)
+              - column:
+                  name: updated_by
+                  type: varchar(255)
+
+  # ---------- ROLES TABLE ----------
+  # Permission roles within this tenant. Seeded with ADMIN, ROLE1, ROLE2.
+  # is_system_role = true for built-in roles, false for custom roles created by admin.
+  - changeSet:
+      id: 001-02-create-roles
+      author: multitenant
+      changes:
+        - createTable:
+            tableName: roles
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: description
+                  type: varchar(255)
+              - column:
+                  name: is_system_role
+                  type: boolean
+                  defaultValueBoolean: false
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: NOW()
+                  constraints:
+                    nullable: false
+
+  # ---------- COMPANY USER ROLES (Join Table) ----------
+  # Many-to-many: one user can have multiple roles, one role assigned to multiple users.
+  # ON DELETE CASCADE: removing a user or role auto-removes the association.
+  - changeSet:
+      id: 001-03-create-company-user-roles
+      author: multitenant
+      changes:
+        - createTable:
+            tableName: company_user_roles
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: user_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: role_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: assigned_at
+                  type: timestamp
+                  defaultValueComputed: NOW()
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: company_user_roles
+            baseColumnNames: user_id
+            referencedTableName: company_users
+            referencedColumnNames: id
+            constraintName: fk_cur_user
+            onDelete: CASCADE
+        - addForeignKeyConstraint:
+            baseTableName: company_user_roles
+            baseColumnNames: role_id
+            referencedTableName: roles
+            referencedColumnNames: id
+            constraintName: fk_cur_role
+            onDelete: CASCADE
+        - addUniqueConstraint:
+            tableName: company_user_roles
+            columnNames: user_id, role_id
+            constraintName: uq_user_role
+
+  # ---------- CLIENTS TABLE ----------
+  # End-users who register via Client Portal. metadata (JSONB) for flexible tenant-specific data.
+  - changeSet:
+      id: 001-04-create-clients
+      author: multitenant
+      changes:
+        - createTable:
+            tableName: clients
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: keycloak_id
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: email
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: first_name
+                  type: varchar(100)
+              - column:
+                  name: last_name
+                  type: varchar(100)
+              - column:
+                  name: phone
+                  type: varchar(20)
+              - column:
+                  name: is_active
+                  type: boolean
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
+              - column:
+                  name: metadata
+                  type: jsonb
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: NOW()
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  defaultValueComputed: NOW()
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_by
+                  type: varchar(255)
+              - column:
+                  name: updated_by
+                  type: varchar(255)
+
+  # ---------- AUDIT LOG TABLE ----------
+  # Tracks changes to tenant data. old_value/new_value store entity snapshots as JSONB.
+  - changeSet:
+      id: 001-05-create-audit-log
+      author: multitenant
+      changes:
+        - createTable:
+            tableName: audit_log
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: entity_type
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: entity_id
+                  type: uuid
+                  constraints:
+                    nullable: false
+              - column:
+                  name: action
+                  type: varchar(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: performed_by
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: old_value
+                  type: jsonb
+              - column:
+                  name: new_value
+                  type: jsonb
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: NOW()
+                  constraints:
+                    nullable: false
+
+  # ---------- SEED DEFAULT ROLES ----------
+  # Every tenant starts with ADMIN, ROLE1, ROLE2 as system roles.
+  - changeSet:
+      id: 001-06-seed-default-roles
+      author: multitenant
+      changes:
+        - insert:
+            tableName: roles
+            columns:
+              - column: { name: name, value: "ADMIN" }
+              - column: { name: description, value: "Tenant administrator with full access" }
+              - column: { name: is_system_role, valueBoolean: true }
+        - insert:
+            tableName: roles
+            columns:
+              - column: { name: name, value: "ROLE1" }
+              - column: { name: description, value: "Default role 1 - can view and manage assigned resources" }
+              - column: { name: is_system_role, valueBoolean: true }
+        - insert:
+            tableName: roles
+            columns:
+              - column: { name: name, value: "ROLE2" }
+              - column: { name: description, value: "Default role 2 - read-only access to resources" }
+              - column: { name: is_system_role, valueBoolean: true }
+
+  # ---------- INDEXES ----------
+  - changeSet:
+      id: 001-07-create-tenant-indexes
+      author: multitenant
+      changes:
+        - createIndex:
+            indexName: idx_company_users_email
+            tableName: company_users
+            columns:
+              - column: { name: email }
+        - createIndex:
+            indexName: idx_company_users_keycloak
+            tableName: company_users
+            columns:
+              - column: { name: keycloak_id }
+        - createIndex:
+            indexName: idx_clients_email
+            tableName: clients
+            columns:
+              - column: { name: email }
+        - createIndex:
+            indexName: idx_clients_keycloak
+            tableName: clients
+            columns:
+              - column: { name: keycloak_id }
+        - createIndex:
+            indexName: idx_audit_log_entity
+            tableName: audit_log
+            columns:
+              - column: { name: entity_type }
+              - column: { name: entity_id }
+        - createIndex:
+            indexName: idx_audit_log_created_at
+            tableName: audit_log
+            columns:
+              - column: { name: created_at }

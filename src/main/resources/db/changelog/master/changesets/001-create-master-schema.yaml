@@ -1,0 +1,192 @@
+# ==============================================================================
+# 001: Create master/public schema tables
+# ==============================================================================
+# Creates the cross-tenant tables: subscription_plans and tenants.
+# These live in the "public" schema and are shared across all tenants.
+# ==============================================================================
+
+databaseChangeLog:
+
+  # ---------- SUBSCRIPTION PLANS TABLE ----------
+  # Defines plan tiers (FREE, STARTER, etc.) that tenants subscribe to.
+  # Created FIRST because tenants table has a FK to this.
+  - changeSet:
+      id: 001-01-create-subscription-plans
+      author: multitenant
+      changes:
+        - createTable:
+            tableName: subscription_plans
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: max_users
+                  type: int
+                  defaultValueNumeric: 10
+                  constraints:
+                    nullable: false
+              - column:
+                  name: max_clients
+                  type: int
+                  defaultValueNumeric: 100
+                  constraints:
+                    nullable: false
+              - column:
+                  name: features
+                  type: jsonb
+              - column:
+                  name: is_active
+                  type: boolean
+                  defaultValueBoolean: true
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: NOW()
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  defaultValueComputed: NOW()
+                  constraints:
+                    nullable: false
+
+  # ---------- TENANTS TABLE ----------
+  # One row per registered company. The heart of the multitenant system.
+  # status: REGISTERED -> PROVISIONING -> ACTIVE -> SUSPENDED -> DELETED
+  - changeSet:
+      id: 001-02-create-tenants
+      author: multitenant
+      changes:
+        - createTable:
+            tableName: tenants
+            columns:
+              - column:
+                  name: id
+                  type: uuid
+                  defaultValueComputed: gen_random_uuid()
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: tenant_id
+                  type: varchar(50)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: company_name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: schema_name
+                  type: varchar(100)
+                  constraints:
+                    nullable: false
+                    unique: true
+              - column:
+                  name: status
+                  type: varchar(20)
+                  defaultValue: REGISTERED
+                  constraints:
+                    nullable: false
+              - column:
+                  name: owner_email
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: owner_keycloak_id
+                  type: varchar(255)
+              - column:
+                  name: subscription_plan_id
+                  type: uuid
+              - column:
+                  name: created_at
+                  type: timestamp
+                  defaultValueComputed: NOW()
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: timestamp
+                  defaultValueComputed: NOW()
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: tenants
+            baseColumnNames: subscription_plan_id
+            referencedTableName: subscription_plans
+            referencedColumnNames: id
+            constraintName: fk_tenant_subscription_plan
+
+  # ---------- INDEXES ----------
+  - changeSet:
+      id: 001-03-create-master-indexes
+      author: multitenant
+      changes:
+        - createIndex:
+            indexName: idx_tenants_tenant_id
+            tableName: tenants
+            columns:
+              - column:
+                  name: tenant_id
+        - createIndex:
+            indexName: idx_tenants_status
+            tableName: tenants
+            columns:
+              - column:
+                  name: status
+        - createIndex:
+            indexName: idx_tenants_owner_email
+            tableName: tenants
+            columns:
+              - column:
+                  name: owner_email
+
+  # ---------- SEED DEFAULT PLANS ----------
+  # -1 for max_users/max_clients = unlimited
+  - changeSet:
+      id: 001-04-seed-subscription-plans
+      author: multitenant
+      context: "!test"
+      changes:
+        - insert:
+            tableName: subscription_plans
+            columns:
+              - column: { name: name, value: "FREE" }
+              - column: { name: max_users, valueNumeric: 5 }
+              - column: { name: max_clients, valueNumeric: 50 }
+              - column: { name: features, value: '{"analytics": false, "api_access": false}' }
+        - insert:
+            tableName: subscription_plans
+            columns:
+              - column: { name: name, value: "STARTER" }
+              - column: { name: max_users, valueNumeric: 20 }
+              - column: { name: max_clients, valueNumeric: 500 }
+              - column: { name: features, value: '{"analytics": true, "api_access": false}' }
+        - insert:
+            tableName: subscription_plans
+            columns:
+              - column: { name: name, value: "PROFESSIONAL" }
+              - column: { name: max_users, valueNumeric: 100 }
+              - column: { name: max_clients, valueNumeric: 5000 }
+              - column: { name: features, value: '{"analytics": true, "api_access": true}' }
+        - insert:
+            tableName: subscription_plans
+            columns:
+              - column: { name: name, value: "ENTERPRISE" }
+              - column: { name: max_users, valueNumeric: -1 }
+              - column: { name: max_clients, valueNumeric: -1 }
+              - column: { name: features, value: '{"analytics": true, "api_access": true, "custom_branding": true, "sla": true}' }

@@ -1,0 +1,23 @@
+# ==============================================================================
+# TENANT CHANGELOG - Per-tenant schema (business data)
+# ==============================================================================
+# Runs PROGRAMMATICALLY when a company purchases a subscription plan.
+# Target: "tenant_{slug}" PostgreSQL schema (e.g., tenant_acme-corp).
+# Contains: company_users, roles, clients, audit_log tables.
+#
+# This changelog is NOT auto-run on startup. It is triggered by:
+#   LiquibaseConfig.migrateTenantSchema("tenant_acme-corp")
+#     -> called by TenantSchemaInitializer.createSchema()
+#       -> called by TenantProvisioningService.provisionTenantSchema()
+#
+# HOW TO ADD NEW TENANT MIGRATIONS:
+#   1. Create a new file in changesets/ (e.g., 002-add-department-table.yaml)
+#   2. Add an include entry below
+#   3. Existing tenants: call migrateAllExistingTenants() on startup to apply new changesets
+#   4. New tenants: get all changesets (001 + 002 + ...) automatically on creation
+# ==============================================================================
+
+databaseChangeLog:
+  - include:
+      file: changesets/001-create-tenant-schema.yaml
+      relativeToChangelogFile: true

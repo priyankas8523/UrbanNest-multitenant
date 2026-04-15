@@ -1,0 +1,11 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5431/multitenant_db
+    username: multitent
+    password: multitent
+
+logging:
+  level:
+    com.multitenant: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
