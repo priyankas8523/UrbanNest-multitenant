@@ -1,6 +1,6 @@
-package com.keycloak.demo.tenant.tenant;
+package com.keycloak.demo.tenant;
 
-import com.multitenant.app.common.constants.AppConstants;
+import com.keycloak.demo.common.constants.AppConstants;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernatePropertiesCustomizer;

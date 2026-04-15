@@ -1,29 +1,124 @@
+# ==============================================================================
+# URBANNEST APPLICATION - Main Configuration
+# ==============================================================================
+# This is the default profile. Override values with application-dev.yml or
+# application-prod.yml by setting SPRING_PROFILES_ACTIVE=dev or =prod.
+#
+# ENVIRONMENT VARIABLES (secrets - never commit real values):
+#   DB_PASSWORD         - PostgreSQL password
+#   KC_ADMIN_SECRET     - Keycloak "urbannest-api" client secret
+#   KC_COMPANY_SECRET   - Keycloak "company-portal" client secret
+#   KC_CLIENT_SECRET    - Keycloak "client-portal" client secret
+# ==============================================================================
+
 server:
-  port: 8089
+  port: 8000
+  servlet:
+    # All API endpoints are prefixed with /api
+    # So /v1/auth/company/login becomes http://localhost:8000/api/v1/auth/company/login
+    context-path: /api
 
 spring:
+  # -- DATABASE CONFIGURATION --
   datasource:
-    url: jdbc:postgresql://localhost:5434/urbannest_db?currentSchema=public&options=-c%20TimeZone=Asia/Kolkata
+    url: jdbc:postgresql://localhost:5431/urbannest_db
     username: urbannest
-    password: urbannest
-    driver-class-name: org.postgresql.Driver
+    # Uses environment variable DB_PASSWORD, falls back to "urbannest" for local dev
+    password: ${DB_PASSWORD:urbannest}
+    hikari:
+      # Connection pool settings - shared across ALL tenants (schema-per-tenant uses one pool)
+      maximum-pool-size: 20        # Max concurrent DB connections (tune based on tenant count)
+      minimum-idle: 5              # Keep 5 connections warm for quick response
+      connection-timeout: 30000    # Fail fast if pool is exhausted (30 seconds)
 
-
+  # -- JPA / HIBERNATE --
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
+      # NEVER use ddl-auto in production. Liquibase manages all schema changes.
+      # "none" means Hibernate won't touch the database structure at all.
       ddl-auto: none
     properties:
       hibernate:
-        format_sql: true
-#        dialect: org.hibernate.dialect.PostgreSQLDialect
-        multiTenancy: SCHEMA
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true    # Pretty-print SQL in logs (disable in prod for performance)
+    # IMPORTANT: Disable Open-In-View to prevent lazy-loading in controllers.
+    # This forces all DB access to happen in @Service/@Transactional methods,
+    # which is cleaner and avoids N+1 query surprises.
+    open-in-view: false
 
+  # -- LIQUIBASE (Database Migrations) --
+  liquibase:
+    enabled: true
+    # Runs MASTER schema changelog on startup (public schema).
+    # Tenant schema migrations are run programmatically by LiquibaseConfig.migrateTenantSchema()
+    # when a company purchases a subscription plan.
+    change-log: classpath:db/changelog/master/master.yaml
+    default-schema: public          # Target the public/master schema
+
+  # -- SPRING SECURITY / OAUTH2 RESOURCE SERVER --
   security:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8081/realms/urbannest-system
+          # Keycloak's issuer URI - Spring downloads the realm's public keys from here
+          # to verify JWT signatures. If this URL is wrong, ALL authenticated requests will fail.
+          issuer-uri: http://localhost:8180/realms/urbannest
+          # JWKS (JSON Web Key Set) endpoint - contains the public keys used to verify JWTs
+          jwk-set-uri: http://localhost:8180/realms/urbannest/protocol/openid-connect/certs
 
-  application:
-    name: demo
+# ==============================================================================
+# KEYCLOAK CONFIGURATION (Custom - not part of Spring Boot auto-config)
+# ==============================================================================
+keycloak:
+  admin:
+    # Used by KeycloakAdminConfig to create the admin client bean
+    # This client has "Service Account Enabled" in Keycloak and uses client_credentials grant
+    server-url: http://localhost:8180
+    realm: urbannest
+    client-id: urbannest-api
+    client-secret: ${KC_ADMIN_SECRET:urbannest-api-secret}
+  app:
+    # Two separate Keycloak clients - one per portal
+    # Company Portal: used by CompanyAuthController for company user login/registration
+    company-portal-client-id: company-portal
+    company-portal-client-secret: ${KC_COMPANY_SECRET:company-portal-secret}
+    # Client Portal: used by ClientAuthController for client user login/registration
+    client-portal-client-id: client-portal
+    client-portal-client-secret: ${KC_CLIENT_SECRET:client-portal-secret}
+    # Keycloak token endpoints - used by KeycloakAuthService to proxy login/refresh/logout
+    token-url: http://localhost:8180/realms/urbannest/protocol/openid-connect/token
+    logout-url: http://localhost:8180/realms/urbannest/protocol/openid-connect/logout
+
+# ==============================================================================
+# APPLICATION-SPECIFIC SETTINGS
+# ==============================================================================
+app:
+  tenant:
+    default-schema: public     # Master schema name (where tenants + subscription_plans live)
+    schema-prefix: tenant_     # Prefix for tenant schemas (e.g., tenant_acme-corp)
+  cors:
+    # Frontend origins allowed to call this API
+    # Company Portal typically runs on :3000, Client Portal on :3001
+    allowed-origins: http://localhost:3000,http://localhost:3001
+    allowed-methods: GET,POST,PUT,DELETE,PATCH,OPTIONS
+
+# ==============================================================================
+# SWAGGER / OPENAPI DOCUMENTATION
+# ==============================================================================
+springdoc:
+  api-docs:
+    path: /v3/api-docs           # OpenAPI spec JSON endpoint
+  swagger-ui:
+    path: /swagger-ui.html       # Interactive API docs UI
+    tags-sorter: alpha            # Sort endpoint groups alphabetically
+    operations-sorter: alpha      # Sort endpoints within groups alphabetically
+
+# ==============================================================================
+# LOGGING
+# ==============================================================================
+# DEBUG level for development. Override with application-prod.yml for production.
+logging:
+  level:
+    com.urbannest: DEBUG                  # Our application code
+    org.hibernate.SQL: DEBUG                # See all SQL queries
+    org.springframework.security: DEBUG     # See security filter chain decisions

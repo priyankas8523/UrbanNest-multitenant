@@ -1,4 +1,4 @@
-package com.multitenant.app.common.constants;
+package com.keycloak.demo.common.constants;
 
 /**
  * Role constants matching the roles defined in Keycloak's "multitenant" realm.

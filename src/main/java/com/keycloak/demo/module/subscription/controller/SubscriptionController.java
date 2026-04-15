@@ -1,12 +1,12 @@
-package com.multitenant.app.module.subscription.controller;
+package com.keycloak.demo.module.subscription.controller;
 
-import com.multitenant.app.common.constants.AppConstants;
-import com.multitenant.app.common.constants.RoleConstants;
-import com.multitenant.app.common.dto.ApiResponse;
-import com.multitenant.app.master.entity.SubscriptionPlan;
-import com.multitenant.app.module.subscription.dto.PurchasePlanRequest;
-import com.multitenant.app.module.subscription.dto.SubscriptionResponse;
-import com.multitenant.app.module.subscription.service.SubscriptionService;
+import com.keycloak.demo.common.constants.AppConstants;
+import com.keycloak.demo.common.constants.RoleConstants;
+import com.keycloak.demo.common.dto.ApiResponse;
+import com.keycloak.demo.master.entity.SubscriptionPlan;
+import com.keycloak.demo.module.subscription.dto.PurchasePlanRequest;
+import com.keycloak.demo.module.subscription.dto.SubscriptionResponse;
+import com.keycloak.demo.module.subscription.service.SubscriptionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

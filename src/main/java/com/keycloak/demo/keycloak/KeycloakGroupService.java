@@ -1,7 +1,7 @@
-package com.multitenant.app.keycloak;
+package com.keycloak.demo.keycloak;
 
-import com.multitenant.app.common.constants.AppConstants;
-import com.multitenant.app.common.exception.BusinessException;
+import com.keycloak.demo.common.constants.AppConstants;
+import com.keycloak.demo.common.exception.BusinessException;
 import jakarta.ws.rs.core.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

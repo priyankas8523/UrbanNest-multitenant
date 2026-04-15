@@ -1,14 +1,14 @@
-package com.multitenant.app.module.auth.controller;
+package com.keycloak.demo.module.auth.controller;
 
-import com.multitenant.app.common.constants.AppConstants;
-import com.multitenant.app.common.dto.ApiResponse;
-import com.multitenant.app.iam.IamService;
-import com.multitenant.app.master.dto.TenantDto;
-import com.multitenant.app.master.dto.TenantRegistrationRequest;
-import com.multitenant.app.master.service.TenantProvisioningService;
-import com.multitenant.app.module.auth.dto.LoginRequest;
-import com.multitenant.app.module.auth.dto.LoginResponse;
-import com.multitenant.app.module.auth.dto.RefreshTokenRequest;
+import com.keycloak.demo.common.constants.AppConstants;
+import com.keycloak.demo.common.dto.ApiResponse;
+import com.keycloak.demo.iam.IamService;
+import com.keycloak.demo.master.dto.TenantDto;
+import com.keycloak.demo.master.dto.TenantRegistrationRequest;
+import com.keycloak.demo.master.service.TenantProvisioningService;
+import com.keycloak.demo.module.auth.dto.LoginRequest;
+import com.keycloak.demo.module.auth.dto.LoginResponse;
+import com.keycloak.demo.module.auth.dto.RefreshTokenRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

@@ -1,4 +1,4 @@
-package com.keycloak.demo.tenant.tenant;
+package com.keycloak.demo.tenant;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -5,10 +5,7 @@
 
 set -e
 
-echo "Creating keycloak_db..."
-
-psql -v ON_ERROR_STOP=1 \
-  --username "urbannest" \
-  --dbname "urbannest_db" <<-EOSQL
+psql -v ON_ERROR_STOP=1 --username "$URBANNEST" --dbname "$URBANNEST_DB" <<-EOSQL
     CREATE DATABASE keycloak_db;
 EOSQL
+

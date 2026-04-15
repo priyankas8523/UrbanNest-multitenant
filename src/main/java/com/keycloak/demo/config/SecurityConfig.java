@@ -1,7 +1,7 @@
-package com.multitenant.app.config;
+package com.keycloak.demo.config;
 
-import com.multitenant.app.common.constants.AppConstants;
-import com.multitenant.app.tenant.TenantFilter;
+import com.keycloak.demo.common.constants.AppConstants;
+import com.keycloak.demo.tenant.TenantFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;

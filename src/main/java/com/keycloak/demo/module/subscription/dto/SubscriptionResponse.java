@@ -1,6 +1,6 @@
-package com.multitenant.app.module.subscription.dto;
+package com.keycloak.demo.module.subscription.dto;
 
-import com.multitenant.app.common.enums.TenantStatus;
+import com.keycloak.demo.common.enums.TenantStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

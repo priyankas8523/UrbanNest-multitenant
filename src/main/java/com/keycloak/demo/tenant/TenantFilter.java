@@ -1,6 +1,6 @@
-package com.keycloak.demo.tenant.tenant;
+package com.keycloak.demo.tenant;
 
-import com.multitenant.app.common.constants.AppConstants;
+import com.keycloak.demo.common.constants.AppConstants;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -30,5 +30,5 @@ keycloak:
 
 logging:
   level:
-    com.multitenant: INFO
+    com.urbannest: INFO
     org.hibernate.SQL: WARN

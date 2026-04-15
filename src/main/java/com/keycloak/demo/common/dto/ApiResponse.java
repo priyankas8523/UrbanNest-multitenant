@@ -1,4 +1,4 @@
-package com.multitenant.app.common.dto;
+package com.keycloak.demo.common.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

@@ -1,15 +1,15 @@
-package com.multitenant.app.module.company.service;
+package com.keycloak.demo.module.company.service;
 
-import com.multitenant.app.common.exception.BusinessException;
-import com.multitenant.app.common.exception.ResourceNotFoundException;
-import com.multitenant.app.iam.IamService;
-import com.multitenant.app.module.company.dto.AddRoleRequest;
-import com.multitenant.app.module.company.dto.AssignRoleRequest;
-import com.multitenant.app.module.company.dto.RoleDto;
-import com.multitenant.app.module.company.entity.CompanyUser;
-import com.multitenant.app.module.company.entity.Role;
-import com.multitenant.app.module.company.repository.CompanyUserRepository;
-import com.multitenant.app.module.company.repository.RoleRepository;
+import com.keycloak.demo.common.exception.BusinessException;
+import com.keycloak.demo.common.exception.ResourceNotFoundException;
+import com.keycloak.demo.iam.IamService;
+import com.keycloak.demo.module.company.dto.AddRoleRequest;
+import com.keycloak.demo.module.company.dto.AssignRoleRequest;
+import com.keycloak.demo.module.company.dto.RoleDto;
+import com.keycloak.demo.module.company.entity.CompanyUser;
+import com.keycloak.demo.module.company.entity.Role;
+import com.keycloak.demo.module.company.repository.CompanyUserRepository;
+import com.keycloak.demo.module.company.repository.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

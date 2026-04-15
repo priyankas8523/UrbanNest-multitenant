@@ -19,5 +19,10 @@
 
 databaseChangeLog:
   - include:
-      file: changesets/001-create-tenant-schema.yaml
+      file: changesets/000-create-tenant-schema.yaml
       relativeToChangelogFile: true
+      
+  - include:
+      file: changesets/001-create-property-table.yaml
+      relativeToChangelogFile: true
+      

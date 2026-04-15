@@ -1,6 +1,6 @@
-package com.multitenant.app.iam;
+package com.keycloak.demo.iam;
 
-import com.multitenant.app.module.auth.dto.LoginResponse;
+import com.keycloak.demo.module.auth.dto.LoginResponse;
 
 import java.util.List;
 import java.util.Map;

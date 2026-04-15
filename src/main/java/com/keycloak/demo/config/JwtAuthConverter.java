@@ -1,4 +1,4 @@
-package com.multitenant.app.config;
+package com.keycloak.demo.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.convert.converter.Converter;
@@ -9,7 +9,9 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -67,7 +69,7 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
      * These are the main roles: SUPER_ADMIN, ADMIN, ROLE1, ROLE2, CLIENT
      *
      * Keycloak JWT snippet:
-     *   "realm_access": { "roles": ["ADMIN", "ROLE1", "default-roles-multitenant"] }
+     *   "realm_access": { "roles": ["ADMIN", "ROLE1", "default-roles-urbannest"] }
      */
     private Collection<GrantedAuthority> extractRealmRoles(Jwt jwt) {
         Map<String, Object> realmAccess = jwt.getClaim("realm_access");

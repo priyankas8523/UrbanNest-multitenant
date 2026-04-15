@@ -1,4 +1,4 @@
-package com.multitenant.app.config;
+package com.keycloak.demo.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
@@ -23,7 +23,7 @@ import org.springframework.context.annotation.Configuration;
  *
  * HOW TO USE:
  *   1. Start the app
- *   2. Open http://localhost:8080/api/swagger-ui.html
+ *   2. Open http://localhost:8180/api/swagger-ui.html
  *   3. Call POST /v1/auth/company/login to get a JWT
  *   4. Click "Authorize", paste the access_token, click "Authorize"
  *   5. Now all "Try it out" calls will include the JWT automatically
@@ -38,7 +38,7 @@ public class OpenApiConfig {
                         .title("Multitenant Architecture API")
                         .version("1.0.0")
                         .description("Industry-level multitenant API with Keycloak authentication")
-                        .contact(new Contact().name("Admin").email("admin@multitenant.com"))
+                        .contact(new Contact().name("Admin").email("admin@urbannest.com"))
                 )
                 // Adds the "Authorize" button to Swagger UI and the lock icon on endpoints
                 .addSecurityItem(new SecurityRequirement().addList("Bearer Authentication"))

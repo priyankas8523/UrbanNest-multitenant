@@ -1,4 +1,4 @@
-package com.multitenant.app.common.audit;
+package com.keycloak.demo.common.audit;
 
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;

@@ -1,7 +1,7 @@
-package com.multitenant.app.master.service;
+package com.keycloak.demo.master.service;
 
-import com.multitenant.app.module.company.entity.CompanyUser;
-import com.multitenant.app.module.company.repository.CompanyUserRepository;
+import com.keycloak.demo.module.company.entity.CompanyUser;
+import com.keycloak.demo.module.company.repository.CompanyUserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

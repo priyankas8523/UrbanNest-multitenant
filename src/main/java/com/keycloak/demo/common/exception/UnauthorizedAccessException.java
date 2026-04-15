@@ -1,4 +1,4 @@
-package com.multitenant.app.common.exception;
+package com.keycloak.demo.common.exception;
 
 /**
  * Thrown when a user tries to access a resource they don't have permission for.

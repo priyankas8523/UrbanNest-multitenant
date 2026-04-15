@@ -1,12 +1,12 @@
-package com.multitenant.app.module.company.controller;
+package com.keycloak.demo.module.company.controller;
 
-import com.multitenant.app.common.constants.AppConstants;
-import com.multitenant.app.common.constants.RoleConstants;
-import com.multitenant.app.common.dto.ApiResponse;
-import com.multitenant.app.module.company.dto.AddRoleRequest;
-import com.multitenant.app.module.company.dto.AssignRoleRequest;
-import com.multitenant.app.module.company.dto.RoleDto;
-import com.multitenant.app.module.company.service.RoleService;
+import com.keycloak.demo.common.constants.AppConstants;
+import com.keycloak.demo.common.constants.RoleConstants;
+import com.keycloak.demo.common.dto.ApiResponse;
+import com.keycloak.demo.module.company.dto.AddRoleRequest;
+import com.keycloak.demo.module.company.dto.AssignRoleRequest;
+import com.keycloak.demo.module.company.dto.RoleDto;
+import com.keycloak.demo.module.company.service.RoleService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

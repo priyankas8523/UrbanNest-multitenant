@@ -1,4 +1,4 @@
-package com.multitenant.app.master.dto;
+package com.keycloak.demo.master.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

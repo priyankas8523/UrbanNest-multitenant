@@ -1,4 +1,4 @@
-package com.multitenant.app.common.enums;
+package com.keycloak.demo.common.enums;
 
 /**
  * Identifies which portal a user belongs to.

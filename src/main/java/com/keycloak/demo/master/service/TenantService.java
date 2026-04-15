@@ -1,11 +1,11 @@
-package com.multitenant.app.master.service;
+package com.keycloak.demo.master.service;
 
-import com.multitenant.app.common.enums.TenantStatus;
-import com.multitenant.app.common.exception.BusinessException;
-import com.multitenant.app.common.exception.TenantNotFoundException;
-import com.multitenant.app.master.dto.TenantDto;
-import com.multitenant.app.master.entity.Tenant;
-import com.multitenant.app.master.repository.TenantRepository;
+import com.keycloak.demo.common.enums.TenantStatus;
+import com.keycloak.demo.common.exception.BusinessException;
+import com.keycloak.demo.common.exception.TenantNotFoundException;
+import com.keycloak.demo.master.dto.TenantDto;
+import com.keycloak.demo.master.entity.Tenant;
+import com.keycloak.demo.master.repository.TenantRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

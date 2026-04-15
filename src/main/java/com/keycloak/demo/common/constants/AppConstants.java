@@ -1,4 +1,4 @@
-package com.multitenant.app.common.constants;
+package com.keycloak.demo.common.constants;
 
 /**
  * Application-wide constants used across all layers.

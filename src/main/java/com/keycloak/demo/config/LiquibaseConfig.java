@@ -1,4 +1,4 @@
-package com.multitenant.app.config;
+package com.keycloak.demo.config;
 
 import liquibase.Liquibase;
 import liquibase.database.Database;

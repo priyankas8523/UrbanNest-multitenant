@@ -1,35 +1,91 @@
-version: '3.8'
+# ==============================================================================
+# DOCKER COMPOSE - Multitenant Architecture Infrastructure for UrbanNest Application
+# ==============================================================================
+# Single PostgreSQL instance with two databases + Keycloak.
+#
+# HOW TO USE:
+#   docker-compose up -d              # Start all services
+#   docker-compose logs -f keycloak   # Watch Keycloak startup
+#   docker-compose down               # Stop (data preserved)
+#   docker-compose down -v            # Stop + DELETE all data (fresh start)
+#
+# PORTS:
+#   PostgreSQL:         localhost:5431  (user: urbannest / pass: urbannest)
+#     - urbannest_db: Application database (master + tenant schemas)
+#     - keycloak_db:    Keycloak's internal database
+#   Keycloak Admin UI:  http://localhost:8180  (admin / admin)
+#   Spring Boot App:    http://localhost:8000  (run separately)
+# ==============================================================================
 
 services:
 
+  # ============================================================================
+  # POSTGRESQL - Single instance, two databases (Port 5431)
+  # ============================================================================
+  # One PostgreSQL server hosts BOTH databases:
+  #   1. urbannest_db  - Our app's data (public schema + tenant_* schemas)
+  #   2. keycloak_db     - Keycloak's internal data (realms, users, clients)
+  #
+  # The init script (init-databases.sh) creates keycloak_db on first startup.
+  # urbannest_db is created automatically via POSTGRES_DB env var.
   postgres:
-    image: postgres:16
-    container_name: property-postgres
+    image: postgres:16-alpine
+    container_name: UrbanNest-postgres
     environment:
-      POSTGRES_DB: urbannest_db
+      POSTGRES_DB: urbannest_db          # Primary database (created automatically)
       POSTGRES_USER: urbannest
       POSTGRES_PASSWORD: urbannest
     ports:
-      - "5434:5432"
+      - "5431:5432"                        # Host 5431 -> Container 5432
     volumes:
       - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql  # Creates keycloak_db
+    networks:
+      - urbannest-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U urbannest"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
+  # ============================================================================
+  # KEYCLOAK (Identity Provider) - Port 8180
+  # ============================================================================
+  # Connects to the SAME PostgreSQL instance above, but uses keycloak_db database.
+  # On first start, imports realm from urbannest-realm.json which creates:
+  #   - "urbannest" realm with roles, clients, protocol mappers
+  #   - Default SUPER_ADMIN user: superadmin@urbannest.com / superadmin123
+  #
+  # Admin console: http://localhost:8180/admin (admin / admin)
   keycloak:
-    image: quay.io/keycloak/keycloak:24.0
-    container_name: property-keycloak
-    command: start-dev
+    image: quay.io/keycloak/keycloak:24.0.3
+    container_name: urbannest-keycloak
+    command:
+      - start-dev
+      - --import-realm
     environment:
       KC_DB: postgres
-      KC_DB_URL_HOST: postgres
-      KC_DB_URL_DATABASE: urbannest_db
+      # Connects to the same postgres container, but keycloak_db database
+      KC_DB_URL: jdbc:postgresql://postgres:5432/keycloak_db
       KC_DB_USERNAME: urbannest
       KC_DB_PASSWORD: urbannest
+      KC_HOSTNAME_STRICT: "false"
+      KC_HTTP_PORT: 8180
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
     ports:
-      - "8081:8080"
+      - "8180:8180"
+    volumes:
+      - ../src/main/resources/db/keycloak:/opt/keycloak/data/import
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
+    networks:
+      - urbannest-network
 
 volumes:
   postgres_data:
+
+networks:
+  urbannest-network:
+    driver: bridge

@@ -4,7 +4,7 @@ import com.keycloak.demo.dto.Property;
 import com.keycloak.demo.dto.ResponseCode;
 import com.keycloak.demo.dto.SuccessResponse;
 import com.keycloak.demo.module.common.Exception.UrbanNestException;
-import com.keycloak.demo.module.common.UrbarNestService;
+import com.keycloak.demo.module.UrbarNestService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

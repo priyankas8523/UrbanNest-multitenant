@@ -4,7 +4,7 @@ import com.keycloak.demo.dto.Literals;
 import com.keycloak.demo.dto.Property;
 import com.keycloak.demo.entity.PropertyEntity;
 import com.keycloak.demo.module.common.Exception.UrbanNestException;
-import com.keycloak.demo.module.common.UrbarNestService;
+import com.keycloak.demo.module.UrbarNestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,6 @@
-package com.multitenant.app.module.client.entity;
+package com.keycloak.demo.module.client.entity;
 
-import com.multitenant.app.common.audit.AuditEntity;
+import com.keycloak.demo.common.audit.AuditEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;

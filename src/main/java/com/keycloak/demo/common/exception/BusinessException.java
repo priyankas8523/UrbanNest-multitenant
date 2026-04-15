@@ -1,4 +1,4 @@
-package com.multitenant.app.common.exception;
+package com.keycloak.demo.common.exception;
 
 /**
  * Thrown when a business rule is violated (not a technical error, not a "not found").

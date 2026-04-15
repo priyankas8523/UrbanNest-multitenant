@@ -1,6 +1,6 @@
-package com.multitenant.app.module.company.repository;
+package com.keycloak.demo.module.company.repository;
 
-import com.multitenant.app.module.company.entity.Role;
+import com.keycloak.demo.module.company.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

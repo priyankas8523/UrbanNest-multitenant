@@ -1,6 +1,6 @@
-package com.multitenant.app.master.dto;
+package com.keycloak.demo.master.dto;
 
-import com.multitenant.app.common.enums.TenantStatus;
+import com.keycloak.demo.common.enums.TenantStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

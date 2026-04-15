@@ -1,4 +1,4 @@
-package com.multitenant.app.common.audit;
+package com.keycloak.demo.common.audit;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

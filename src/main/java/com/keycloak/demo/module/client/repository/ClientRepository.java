@@ -1,6 +1,6 @@
-package com.multitenant.app.module.client.repository;
+package com.keycloak.demo.module.client.repository;
 
-import com.multitenant.app.module.client.entity.Client;
+import com.keycloak.demo.module.client.entity.Client;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

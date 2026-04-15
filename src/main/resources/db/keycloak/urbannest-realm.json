@@ -1,5 +1,5 @@
 {
-  "realm": "multitenant",
+  "realm": "urbannest",
   "enabled": true,
   "sslRequired": "external",
   "registrationAllowed": false,
@@ -59,12 +59,12 @@
   },
   "clients": [
     {
-      "clientId": "multitenant-api",
-      "name": "Multitenant API",
+      "clientId": "urbannest-api",
+      "name": "Urbannest API",
       "description": "Backend API service account",
       "enabled": true,
       "clientAuthenticatorType": "client-secret",
-      "secret": "multitenant-api-secret",
+      "secret": "urbannest-api-secret",
       "serviceAccountsEnabled": true,
       "authorizationServicesEnabled": false,
       "publicClient": false,
@@ -207,7 +207,7 @@
   "users": [
     {
       "username": "superadmin",
-      "email": "superadmin@multitenant.com",
+      "email": "superadmin@urbannest.com",
       "firstName": "Super",
       "lastName": "Admin",
       "enabled": true,

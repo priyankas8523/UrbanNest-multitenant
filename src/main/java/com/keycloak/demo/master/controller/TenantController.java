@@ -1,11 +1,11 @@
-package com.multitenant.app.master.controller;
+package com.keycloak.demo.master.controller;
 
-import com.multitenant.app.common.constants.AppConstants;
-import com.multitenant.app.common.constants.RoleConstants;
-import com.multitenant.app.common.dto.ApiResponse;
-import com.multitenant.app.common.dto.PagedResponse;
-import com.multitenant.app.master.dto.TenantDto;
-import com.multitenant.app.master.service.TenantService;
+import com.keycloak.demo.common.constants.AppConstants;
+import com.keycloak.demo.common.constants.RoleConstants;
+import com.keycloak.demo.common.dto.ApiResponse;
+import com.keycloak.demo.common.dto.PagedResponse;
+import com.keycloak.demo.master.dto.TenantDto;
+import com.keycloak.demo.master.service.TenantService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

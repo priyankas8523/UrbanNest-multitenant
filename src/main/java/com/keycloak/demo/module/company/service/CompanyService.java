@@ -1,10 +1,10 @@
-package com.multitenant.app.module.company.service;
+package com.keycloak.demo.module.company.service;
 
-import com.multitenant.app.common.exception.ResourceNotFoundException;
-import com.multitenant.app.iam.IamService;
-import com.multitenant.app.module.company.dto.CompanyUserDto;
-import com.multitenant.app.module.company.entity.CompanyUser;
-import com.multitenant.app.module.company.repository.CompanyUserRepository;
+import com.keycloak.demo.common.exception.ResourceNotFoundException;
+import com.keycloak.demo.iam.IamService;
+import com.keycloak.demo.module.company.dto.CompanyUserDto;
+import com.keycloak.demo.module.company.entity.CompanyUser;
+import com.keycloak.demo.module.company.repository.CompanyUserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

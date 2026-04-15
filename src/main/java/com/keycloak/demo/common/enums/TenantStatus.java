@@ -1,4 +1,4 @@
-package com.multitenant.app.common.enums;
+package com.keycloak.demo.common.enums;
 
 /**
  * Lifecycle states of a tenant (company) in the system.

@@ -1,4 +1,4 @@
-package com.multitenant.app.module.company.entity;
+package com.keycloak.demo.module.company.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

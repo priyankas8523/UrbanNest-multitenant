@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5431/multitenant_db
-    username: multitent
-    password: multitent
+    url: jdbc:postgresql://localhost:5431/urbannest_db
+    username: urbannest
+    password: urbannest
 
 logging:
   level:

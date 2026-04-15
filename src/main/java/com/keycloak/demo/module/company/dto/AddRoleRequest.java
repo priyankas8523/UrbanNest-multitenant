@@ -1,4 +1,4 @@
-package com.multitenant.app.module.company.dto;
+package com.keycloak.demo.module.company.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

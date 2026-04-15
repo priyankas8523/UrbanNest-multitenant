@@ -1,6 +1,6 @@
-package com.keycloak.demo.tenant.tenant;
+package com.keycloak.demo.tenant;
 
-import com.multitenant.app.common.constants.AppConstants;
+import com.keycloak.demo.common.constants.AppConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.engine.jdbc.connections.spi.MultiTenantConnectionProvider;

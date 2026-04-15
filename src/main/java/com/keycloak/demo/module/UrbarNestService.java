@@ -1,11 +1,9 @@
-package com.keycloak.demo.module.common;
+package com.keycloak.demo.module;
 
 import com.keycloak.demo.dto.ResponseCode;
 import com.keycloak.demo.dto.SuccessResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import java.util.UUID;
 
 public interface UrbarNestService {
 

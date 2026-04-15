@@ -1,7 +1,8 @@
-package com.multitenant.app.master.repository;
+package com.keycloak.demo.master.repository;
 
-import com.multitenant.app.common.enums.TenantStatus;
-import com.multitenant.app.master.entity.Tenant;
+
+import com.keycloak.demo.common.enums.TenantStatus;
+import com.keycloak.demo.master.entity.Tenant;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

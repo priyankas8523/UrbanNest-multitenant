@@ -1,4 +1,4 @@
-package com.multitenant.app.common.exception;
+package com.keycloak.demo.common.exception;
 
 /**
  * Generic "not found" exception for any entity lookup that returns empty.

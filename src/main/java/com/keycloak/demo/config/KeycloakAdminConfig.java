@@ -1,4 +1,4 @@
-package com.multitenant.app.config;
+package com.keycloak.demo.config;
 
 import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;

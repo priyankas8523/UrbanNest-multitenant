@@ -1,6 +1,6 @@
-package com.multitenant.app.master.entity;
+package com.keycloak.demo.master.entity;
 
-import com.multitenant.app.common.enums.TenantStatus;
+import com.keycloak.demo.common.enums.TenantStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;

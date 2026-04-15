@@ -1,6 +1,6 @@
-package com.multitenant.app.module.company.entity;
+package com.keycloak.demo.module.company.entity;
 
-import com.multitenant.app.common.audit.AuditEntity;
+import com.keycloak.demo.common.audit.AuditEntity;
 import jakarta.persistence.*;
 import lombok.*;
 

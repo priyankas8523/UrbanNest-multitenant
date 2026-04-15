@@ -1,10 +1,10 @@
-package com.multitenant.app.iam;
+package com.keycloak.demo.iam;
 
-import com.multitenant.app.keycloak.KeycloakAuthService;
-import com.multitenant.app.keycloak.KeycloakGroupService;
-import com.multitenant.app.keycloak.KeycloakRoleService;
-import com.multitenant.app.keycloak.KeycloakUserService;
-import com.multitenant.app.module.auth.dto.LoginResponse;
+import com.keycloak.demo.keycloak.KeycloakAuthService;
+import com.keycloak.demo.keycloak.KeycloakGroupService;
+import com.keycloak.demo.keycloak.KeycloakRoleService;
+import com.keycloak.demo.keycloak.KeycloakUserService;
+import com.keycloak.demo.module.auth.dto.LoginResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

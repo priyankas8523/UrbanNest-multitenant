@@ -1,7 +1,7 @@
-package com.keycloak.demo.tenant.tenant;
+package com.keycloak.demo.tenant;
 
-import com.multitenant.app.common.constants.AppConstants;
-import com.multitenant.app.config.LiquibaseConfig;
+import com.keycloak.demo.common.constants.AppConstants;
+import com.keycloak.demo.config.LiquibaseConfig;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

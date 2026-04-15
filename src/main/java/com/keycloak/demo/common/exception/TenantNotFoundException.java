@@ -1,4 +1,4 @@
-package com.multitenant.app.common.exception;
+package com.keycloak.demo.common.exception;
 
 /**
  * Thrown when a tenant ID doesn't match any registered tenant in the system.

@@ -1,4 +1,4 @@
-package com.multitenant.app.module.client.dto;
+package com.keycloak.demo.module.client.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

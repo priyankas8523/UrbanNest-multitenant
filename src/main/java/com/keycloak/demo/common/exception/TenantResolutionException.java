@@ -1,4 +1,4 @@
-package com.multitenant.app.common.exception;
+package com.keycloak.demo.common.exception;
 
 /**
  * Thrown when the system cannot determine which tenant a request belongs to.

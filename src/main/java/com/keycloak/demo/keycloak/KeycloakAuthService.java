@@ -1,7 +1,7 @@
-package com.multitenant.app.keycloak;
+package com.keycloak.demo.keycloak;
 
-import com.multitenant.app.common.exception.BusinessException;
-import com.multitenant.app.module.auth.dto.LoginResponse;
+import com.keycloak.demo.common.exception.BusinessException;
+import com.keycloak.demo.module.auth.dto.LoginResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

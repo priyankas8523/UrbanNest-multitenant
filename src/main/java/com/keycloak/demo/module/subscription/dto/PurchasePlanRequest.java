@@ -1,4 +1,4 @@
-package com.multitenant.app.module.subscription.dto;
+package com.keycloak.demo.module.subscription.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
